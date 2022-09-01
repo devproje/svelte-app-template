@@ -4,10 +4,7 @@ import preprocess from 'svelte-preprocess';
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	kit: {
-		adapter: adapter(),
-		prerender: {
-			default: true
-		}
+		adapter: adapter()
 	},
 	preprocess: preprocess()
 };
