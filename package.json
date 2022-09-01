@@ -1,0 +1,58 @@
+{
+	"name": "svelte-app-template",
+	"version": "0.0.1",
+	"private": true,
+	"main": "index.ts",
+	"build": {
+		"icon": "public/favicon.png",
+		"productName": "Svelte and Electron App",
+		"files": [
+			"public/**/*",
+			"index.ts",
+			"preload.ts"
+		],
+		"win": {},
+		"linux": {},
+		"mac": {}
+	},
+	"scripts": {
+		"dev": "vite dev --port 1238",
+		"build": "Pvite build",
+		"preview": "vite preview",
+		"electron": "wait-on http://localhost:1238 && electron .",
+		"electron-dev": "concurrently \"npm run dev\" \"npm run electron\"",
+		"electron-pack": "electron-builder",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@fontsource/fira-mono": "^4.5.9",
+		"cookie": "^0.5.0",
+		"electron-serve": "^1.1.0"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"@types/cookie": "^0.5.1",
+		"@typescript-eslint/eslint-plugin": "^5.27.0",
+		"@typescript-eslint/parser": "^5.27.0",
+		"concurrently": "^6.2.1",
+		"electron": "^13.1.9",
+		"electron-builder": "^22.11.7",
+		"eslint": "^8.16.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^2.6.2",
+		"prettier-plugin-svelte": "^2.7.0",
+		"svelte": "^3.44.0",
+		"svelte-check": "^2.7.1",
+		"svelte-preprocess": "^4.10.6",
+		"tslib": "^2.3.1",
+		"typescript": "^4.7.4",
+		"vite": "^3.1.0-beta.1",
+		"wait-on": "^6.0.0"
+	},
+	"type": "module"
+}
