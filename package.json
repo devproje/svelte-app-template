@@ -2,25 +2,39 @@
 	"name": "svelte-app-template",
 	"version": "0.0.1",
 	"private": true,
-	"main": "index.ts",
+	"main": "src/electron.cjs",
 	"build": {
 		"icon": "public/favicon.png",
-		"productName": "Svelte and Electron App",
+		"productName": "svelte-app-templ",
 		"files": [
-			"public/**/*",
+			"src/**/*",
+			"node_modules/**/*",
+			"package.json",
 			"index.ts",
 			"preload.ts"
 		],
-		"win": {},
-		"linux": {},
-		"mac": {}
+		"mac": {
+			"target": [
+				"dmg"
+			],
+			"category": "productivity",
+			"type": "distribution",
+			"hardenedRuntime": "true"
+		},
+		"linux": {
+			"target": [
+				"AppImage",
+				"snap"
+			],
+			"category": "productivity"
+		}
 	},
 	"scripts": {
-		"dev": "vite dev --port 1238",
+		"dev": "vite dev --port 3580",
 		"build": "Pvite build",
 		"preview": "vite preview",
-		"electron": "wait-on http://localhost:1238 && electron .",
-		"electron-dev": "concurrently \"npm run dev\" \"npm run electron\"",
+		"electron": "wait-on http://localhost:3580 && electron .",
+		"electron-dev": "concurrently --kill-others \"npm run dev\" \"npm run electron\"",
 		"electron-pack": "electron-builder",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -29,6 +43,7 @@
 	},
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.9",
+		"@sveltejs/adapter-static": "^1.0.0-next.41",
 		"cookie": "^0.5.0",
 		"electron-serve": "^1.1.0"
 	},
