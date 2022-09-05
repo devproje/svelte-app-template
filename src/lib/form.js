@@ -1,40 +1,38 @@
-import { invalidate } from '$app/navigation';
+import { invalidateAll } from '$app/navigation';
 
 // this action (https://svelte.dev/tutorial/actions) allows us to
 // progressively enhance a <form> that already works without JS
-export function enhance(
-	form: HTMLFormElement,
-	{
-		pending,
-		error,
-		result
-	}: {
-		pending?: ({ data, form }: { data: FormData; form: HTMLFormElement }) => void;
-		error?: ({
-			data,
-			form,
-			response,
-			error
-		}: {
-			data: FormData;
-			form: HTMLFormElement;
-			response: Response | null;
-			error: Error | null;
-		}) => void;
-		result?: ({
-			data,
-			form,
-			response
-		}: {
-			data: FormData;
-			response: Response;
-			form: HTMLFormElement;
-		}) => void;
-	} = {}
-) {
-	let current_token: unknown;
+/**
+ * @param {HTMLFormElement} form
+ * @param {{
+ *   pending?: ({ data, form }: { data: FormData; form: HTMLFormElement }) => void;
+ *   error?: ({
+ *     data,
+ *     form,
+ *     response,
+ *     error
+ *   }: {
+ *     data: FormData;
+ *     form: HTMLFormElement;
+ *     response: Response | null;
+ *     error: Error | null;
+ *   }) => void;
+ *   result?: ({
+ *     data,
+ *     form,
+ *     response
+ *   }: {
+ *     data: FormData;
+ *     response: Response;
+ *     form: HTMLFormElement;
+ *   }) => void;
+ * }} opts
+ */
+export function enhance(form, { pending, error, result } = {}) {
+	let current_token;
 
-	async function handle_submit(event: SubmitEvent) {
+	/** @param {SubmitEvent} event */
+	async function handle_submit(event) {
 		const token = (current_token = {});
 
 		event.preventDefault();
@@ -56,13 +54,13 @@ export function enhance(
 
 			if (response.ok) {
 				if (result) result({ data, form, response });
-				invalidate();
+				invalidateAll();
 			} else if (error) {
 				error({ data, form, error: null, response });
 			} else {
 				console.error(await response.text());
 			}
-		} catch (err: unknown) {
+		} catch (err) {
 			if (error && err instanceof Error) {
 				error({ data, form, error: err, response: null });
 			} else {
